@@ -27,8 +27,12 @@ class JDependPlugin implements Plugin<Project> {
 	private static final String JDEPEND_CONFIGURATION_NAME = 'jdependConf'
 	
 	void apply(Project project) {
-		project.task('jdepend', type:JDependTask) << {
-			
-		}
+		
+	}
+	
+	private void configureJdepend(final Project project) {
+		JDepend jdepend = project.getTasks().add(JDEPEND_TASK_NAME, new JDepend())
+		jdepend.setDescription('Run jdepend analysis')
+		
 	}
 }
