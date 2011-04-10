@@ -1,0 +1,4 @@
+Gradle Plugins by ajoberstar
+
+This is a set of Apache licensed Gradle plugins.  Some for popular tools that don't have one
+(at least packaged in pure plugin form) and some that I find personally helpful.
