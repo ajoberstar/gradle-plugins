@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile(
+		gradleApi(),
+		[group:'org.apache.ant', name:'ant-jdepend', version:'1.7.1']
+	)
+	
+	groovy(
+		gradleApi()
+	)
+}
+
+task copyDeps(type: Copy) {
+	from configurations.runtime
+	from configurations.testRuntime
+	into file("${buildDir}/../deps")
+}

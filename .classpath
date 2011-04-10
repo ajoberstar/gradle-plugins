@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/groovy"/>
+	<classpathentry kind="src" path="src/test/groovy"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
+	<classpathentry kind="lib" path="deps/ant-1.7.1.jar"/>
+	<classpathentry kind="lib" path="deps/ant-1.8.1.jar"/>
+	<classpathentry kind="lib" path="deps/ant-antlr-1.8.1.jar"/>
+	<classpathentry kind="lib" path="deps/ant-jdepend-1.7.1.jar"/>
+	<classpathentry kind="lib" path="deps/ant-junit-1.8.1.jar"/>
+	<classpathentry kind="lib" path="deps/ant-launcher-1.7.1.jar"/>
+	<classpathentry kind="lib" path="deps/ant-launcher-1.8.1.jar"/>
+	<classpathentry kind="lib" path="deps/ant-nodeps-1.8.1.jar"/>
+	<classpathentry kind="lib" path="deps/asm-all-3.2.jar"/>
+	<classpathentry kind="lib" path="deps/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="deps/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="deps/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-announce-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-antlr-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-code-quality-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-core-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-eclipse-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-idea-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-jetty-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-launcher-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-maven-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-open-api-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-osgi-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-plugins-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-scala-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-ui-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/gradle-wrapper-0.9.jar"/>
+	<classpathentry kind="lib" path="deps/groovy-all-1.7.6.jar"/>
+	<classpathentry kind="lib" path="deps/ivy-2.2.0.jar"/>
+	<classpathentry kind="lib" path="deps/jdepend-2.7.jar"/>
+	<classpathentry kind="lib" path="deps/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
