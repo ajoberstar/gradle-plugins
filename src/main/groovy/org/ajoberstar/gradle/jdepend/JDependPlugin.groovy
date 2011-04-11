@@ -25,20 +25,22 @@ import org.gradle.api.tasks.GroovySourceSet
 import org.gradle.api.tasks.SourceSet
 
 /**
- * @author Andy
- *
+ * A {@link Plugin} that generates design quality metrics by
+ * scanning your source packages.  This is done using the
+ * JDepend tool.  {@link http://www.clarkware.com/software/JDepend.html}
  */
 class JDependPlugin implements Plugin<Project> {
 	private static final String JDEPEND_TASK_NAME = 'jdepend'
-	private static final String JDEPEND_CONFIGURATION_NAME = 'jdependConf'
 	
+	/**
+	 * Applies the plugin to the specified project.
+	 * @param project the project to apply this plugin too
+	 */
 	void apply(Project project) {
 		project.plugins.apply(ReportingBasePlugin)
 		
 		def convention = new JDependConvention(project)
 		project.convention.plugins.jdepend = convention
-		
-//		configureJdependDefaults(project, convention)
 		
 		project.plugins.withType(JavaBasePlugin) {
 			configureForJavaPlugin(project, convention)
@@ -48,24 +50,21 @@ class JDependPlugin implements Plugin<Project> {
 		}
 	}
 	
-//	private void configureJdependDefaults(final Project project, final JDependConvention convention) {
-//		project.tasks.withType(JDepend) { JDepend jdepend ->
-//			jdepend.conventionMapping.resultsDir = { convention.jdependResultsDir }
-//			jdepend.conventionMapping.resportsDir = { convention.jdependReportsDir }
-//		}
-//	}
-	
+	/**
+	 * Adds a dependency for the check task on the all
+	 * JDepend tasks.
+	 * @param project the project to configure the check task for
+	 */
 	private void configureCheckTask(Project project) {
 		def task = project.tasks[JavaBasePlugin.CHECK_TASK_NAME]
 		task.dependsOn project.tasks.withType(JDepend)
 	}
 	
-	private void configureJdependTask(final Project project) {
-		JDepend jdepend = project.getTasks().add(JDEPEND_TASK_NAME, new JDepend())
-		jdepend.setDescription('Run jdepend analysis')
-		
-	}
-	
+	/**
+	 * Configures JDepend tasks for Java source sets.
+	 * @param project the project to configure jdepend for
+	 * @param convention the jdepend conventions to use
+	 */
 	private void configureForJavaPlugin(final Project project, final JDependConvention convention) {
 		configureCheckTask(project)
 		
@@ -77,6 +76,11 @@ class JDependPlugin implements Plugin<Project> {
 		}
 	}
 	
+	/**
+	 * Configures JDepend tasks for Groovy source sets.
+	 * @param project the project to configure jdepend for
+	 * @param convention the jdepend conventions to use
+	 */
 	private void configureForGroovyPlugin(final Project project, final JDependConvention convention) {		
 		project.convention.getPlugin(JavaPluginConvention).sourceSets.all { SourceSet set ->
 			def groovySourceSet = set.convention.getPlugin(GroovySourceSet)
