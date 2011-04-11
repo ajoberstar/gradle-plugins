@@ -15,12 +15,52 @@
  */
 package org.ajoberstar.gradle.jdepend
 
-import org.gradle.api.DefaultTask
+import org.ajoberstar.gradle.jdepend.internal.AntJDepend
+import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.VerificationTask
+import org.gradle.api.file.FileCollection
+import org.gradle.api.internal.ConventionTask
 
 /**
  * @author Andy
  *
  */
-class JDepend extends DefaultTask {
+class JDepend extends ConventionTask implements VerificationTask {
+	private FileCollection defaultClasses
+	private File resultsFile
+	private boolean ignoreFailures
 	
+	private AntJDepend antJdepend = new AntJDepend()
+	
+	@TaskAction
+	void check() {
+		antJdepend.jdepend(getAnt(), getDefaultClasses(), getResultsFile(), isIgnoreFailures())
+	}
+	
+	FileCollection getDefaultClasses() {
+		return defaultClasses;
+	}
+	
+	void setDefaultClasses(FileCollection defaultClasses) {
+		this.defaultClasses = defaultClasses
+	}
+	
+	@OutputFile
+	File getResultsFile() {
+		return resultsFile
+	}
+	
+	void setResultsFile(File resultsFile) {
+		this.resultsFile = resultsFile
+	}
+	
+	boolean isIgnoreFailures() {
+		return ignoreFailures
+	}
+	
+	JDepend setIgnoreFailures(boolean ignoreFailures) {
+		this.ignoreFailures = ignoreFailures
+		return this
+	}
 }
