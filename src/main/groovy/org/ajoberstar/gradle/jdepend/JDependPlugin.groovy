@@ -31,6 +31,7 @@ import org.gradle.api.tasks.SourceSet
  */
 class JDependPlugin implements Plugin<Project> {
 	private static final String JDEPEND_TASK_NAME = 'jdepend'
+	private static final String JDEPEND_CONFIGURATION_NAME = 'jdepend'
 	
 	/**
 	 * Applies the plugin to the specified project.
@@ -38,6 +39,11 @@ class JDependPlugin implements Plugin<Project> {
 	 */
 	void apply(Project project) {
 		project.plugins.apply(ReportingBasePlugin)
+		
+		project.getConfigurations().add(JDEPEND_CONFIGURATION_NAME)
+			.setVisible(false)
+			.setTransitive(true)
+			.setDescription("The jdepend libraries to be used for this project.")
 		
 		def convention = new JDependConvention(project)
 		project.convention.plugins.jdepend = convention
@@ -71,8 +77,8 @@ class JDependPlugin implements Plugin<Project> {
 		project.convention.getPlugin(JavaPluginConvention).sourceSets.all { SourceSet set ->
 			def jdepend = project.tasks.add(set.getTaskName(JDEPEND_TASK_NAME, null), JDepend)
 			jdepend.description = "Run jdepend analysis for ${set.name} classes"
-			jdepend.conventionMapping.defaultClasses = { set.classes }
-			jdepend.conventionMapping.resultsFile = { new File(convention.jdependResultsDir, "${set.name}.xml") }
+			jdepend.conventionMapping.classesDir = { set.classesDir }
+			jdepend.conventionMapping.resultsFile = { new File(convention.resultsDir, "${set.name}.xml") }
 		}
 	}
 	
@@ -86,8 +92,8 @@ class JDependPlugin implements Plugin<Project> {
 			def groovySourceSet = set.convention.getPlugin(GroovySourceSet)
 			def jdepend = project.tasks.add(set.getTaskName(JDEPEND_TASK_NAME, null), JDepend)
 			jdepend.description = "Run jdepend analysis for ${set.name} classes"
-			jdepend.conventionMapping.defaultClasses = { set.classes }
-			jdepend.conventionMapping.resultsFile = { new File(convention.jdependResultsDir, "${set.name}.xml") }
+			jdepend.conventionMapping.classesDir = { groovySourceSet.classesDir }
+			jdepend.conventionMapping.resultsFile = { new File(convention.resultsDir, "${set.name}.xml") }
 		}
 	}
 }

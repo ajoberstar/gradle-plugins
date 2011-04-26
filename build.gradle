@@ -1,10 +1,22 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath group:'de.huxhorn.gradle', name:'de.huxhorn.gradle.pgp-plugin', version:'0.0.3'
+	}
+}
+
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
+apply plugin: de.huxhorn.gradle.pgp.PgpPlugin
 
 group = 'org.ajoberstar'
-version = '0.1.0'
+version = '0.1.0.SNAPSHOT'
+description = 'A set of gradle plugins for popular tools and other assorted plugins.'
+status = 'snapshot'
 
 repositories {
 	mavenCentral()
@@ -12,8 +24,7 @@ repositories {
 
 dependencies {
 	compile(
-		gradleApi(),
-		[group:'org.apache.ant', name:'ant-jdepend', version:'1.7.1']
+		gradleApi()
 	)
 	
 	groovy(
@@ -21,6 +32,57 @@ dependencies {
 	)
 	
 	testCompile(
-		[group:'junit', name:'junit', version:'4.8.2']	
+		[group:'junit', name:'junit', version:'4.8.2']
 	)
+}
+
+task sourcesJar(type:Jar, dependsOn:classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type:Jar, dependsOn:javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		name = 'Sonatype OSS'
+		repository(url:'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+			authentication(userName:sonatypeUserName, password:sonatypePassword)
+		}
+		snapshotRepository(url:'https://oss.sonatype.org/content/repositories/snapshots') {
+			authentication(userName:sonatypeUserName, password:sonatypePassword)
+		}
+		
+		pom.project {
+			name name
+			description description
+			url 'http://github.com/ajoberstar/gradle-plugins'
+			licenses {
+				license {
+					name 'The Apache Software License, Version 2.0'
+					url 'http://www.apache.org/licenses/LICENSE-2.0'
+				}
+			}
+			developers {
+				developer {
+					id 'ajoberstar'
+					name 'Andrew Oberstar'
+					email 'andrew@ajoberstar.org'
+				}
+			}
+			scm {
+				connection 'git://github.com/ajoberstar/gradle-plugins.git'
+				developerConnection 'git@github.com:ajoberstar/gradle-plugins.git'
+				url 'http://github.com/ajoberstar/gradle-plugins'
+			}
+		}
+	}
 }
