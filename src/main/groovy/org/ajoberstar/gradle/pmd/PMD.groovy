@@ -15,20 +15,18 @@
  */
 package org.ajoberstar.gradle.pmd
 
-import groovy.util.AntBuilder;
+import java.io.File
+import java.util.Set
 
-import java.io.File;
-import java.util.Set;
-
+import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.VerificationTask
-import org.gradle.api.file.FileCollection
-import org.gradle.api.tasks.SourceTask
 
 /**
- * @author Andy
+ * @author Andrew Oberstar
  *
  */
 class PMD extends SourceTask implements VerificationTask {	

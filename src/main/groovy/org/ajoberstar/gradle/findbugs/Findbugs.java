@@ -13,51 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ajoberstar.gradle.jdepend;
+package org.ajoberstar.gradle.findbugs;
 
 import java.io.File;
 
-import org.ajoberstar.gradle.jdepend.internal.AntJDepend;
-import org.gradle.api.DefaultTask;
-import org.gradle.api.Task;
-import org.gradle.api.specs.Spec;
+import org.ajoberstar.gradle.findbugs.internal.AntFindbugs;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.VerificationTask;
 
 /**
- * 
- * 
- * 
  * @author Andrew Oberstar
  *
  */
-public class JDepend extends DefaultTask implements VerificationTask {
-	private File classesDir;
-	private File resultsFile;
+public class Findbugs extends SourceTask implements VerificationTask {
 	private boolean ignoreFailures;
+	private File resultsFile;
+	private File classesDir;
 	
-	private AntJDepend antJDepend = new AntJDepend();
-	
-	public JDepend() {
-		Spec<Task> spec = new Spec<Task>() {
-			public boolean isSatisfiedBy(Task task) {
-				if (task instanceof JDepend) {
-					return ((JDepend) task).getClassesDir().exists();	
-				} else {
-					return false;
-				}
-			}
-		};
-		this.onlyIf(spec);
-	}
+	private AntFindbugs antFindbugs = new AntFindbugs();
 	
 	@TaskAction
-	void check() {
-		antJDepend.call(getAnt(), getProject(), getClassesDir(), getResultsFile(), isIgnoreFailures());
+	public void check() {
+		antFindbugs.call(getAnt(), getProject(), getSource(), getClassesDir(), getResultsFile(), isIgnoreFailures());
 	}
-
+	
 	/**
 	 * @return the classesDir
 	 */
@@ -102,5 +84,4 @@ public class JDepend extends DefaultTask implements VerificationTask {
 		this.ignoreFailures = ignoreFailures;
 		return this;
 	}
-	
 }
