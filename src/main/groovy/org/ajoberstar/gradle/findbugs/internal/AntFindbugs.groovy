@@ -30,7 +30,7 @@ import org.gradle.api.file.FileCollection
 class AntFindbugs {
 	def call(AntBuilder ant, Project project, FileCollection source, File classesDir, File resultsFile, boolean ignoreFailures) {
 		ant.taskdef(name:'findbugs', classname:'edu.umd.cs.findbugs.anttask.FindBugsTask', classpath:project.configurations[FindbugsPlugin.FINDBUGS_CONFIGURATION_NAME].asPath)
-		ant.findbugs(home:'/opt/findbugs/findbugs', output:'xml', outputFile:resultsFile, warningsProperty:'foundBugs', failOnError:true) {
+		ant.findbugs(outputFile:resultsFile, warningsProperty:'foundBugs', failOnError:true, pluginList:'', classpath:project.configurations[FindbugsPlugin.FINDBUGS_CONFIGURATION_NAME].asPath) {
 			auxClasspath(path:project.configurations.runtime.asPath)
 			sourcePath(path:source.asPath)
 			'class'(location:classesDir)
