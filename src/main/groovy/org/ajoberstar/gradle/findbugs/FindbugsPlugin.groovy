@@ -23,6 +23,7 @@ import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.plugins.ReportingBasePlugin
 import org.gradle.api.tasks.GroovySourceSet
 import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.compile.Compile;
 
 /**
  * A {@link Plugin} which uses static analysis to look for bugs in Java code.  
@@ -50,9 +51,6 @@ class FindbugsPlugin implements Plugin<Project> {
 	   project.plugins.withType(JavaBasePlugin) {
 		   configureForJavaPlugin(project, convention)
 	   }
-	   project.plugins.withType(GroovyBasePlugin) {
-		   configureForGroovyPlugin(project, convention)
-	   }
    }
    
    /**
@@ -76,24 +74,10 @@ class FindbugsPlugin implements Plugin<Project> {
 	   project.convention.getPlugin(JavaPluginConvention).sourceSets.all { SourceSet set ->
 		   def findbugs = project.tasks.add(set.getTaskName(FINDBUGS_TASK_NAME, null), Findbugs)
 		   findbugs.description = "Run findbugs analysis for ${set.name} classes"
+		   findbugs.dependsOn project.tasks.withType(Compile)
 		   findbugs.conventionMapping.defaultSource = { set.allJava }
-		   findbugs.conventionMapping.classesDir = { set.classesDir }
-		   findbugs.conventionMapping.resultsFile = { new File(convention.resultsDir, "${set.name}.xml") }
-	   }
-   }
-   
-   /**
-	* Configures Findbugs tasks for Groovy source sets.
-	* @param project the project to configure findbugs for
-	* @param convention the findbugs conventions to use
-	*/
-   private void configureForGroovyPlugin(final Project project, final FindbugsConvention convention) {
-	   project.convention.getPlugin(JavaPluginConvention).sourceSets.all { SourceSet set ->
-		   def groovySourceSet = set.convention.getPlugin(GroovySourceSet)
-		   def findbugs = project.tasks.add(set.getTaskName(FINDBUGS_TASK_NAME, null), Findbugs)
-		   findbugs.description = "Run findbugs analysis for ${set.name} classes"
-		   findbugs.conventionMapping.defaultSource = { groovySourceSet.allGroovy }
-		   findbugs.conventionMapping.classesDir = { groovySourceSet.classesDir }
+		   findbugs.conventionMapping.classpath = { set.compileClasspath }
+		   findbugs.conventionMapping.classes = { set.classes }
 		   findbugs.conventionMapping.resultsFile = { new File(convention.resultsDir, "${set.name}.xml") }
 	   }
    }

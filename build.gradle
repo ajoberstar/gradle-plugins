@@ -16,7 +16,25 @@ apply plugin: de.huxhorn.gradle.pgp.PgpPlugin
 group = 'org.ajoberstar'
 version = '0.1.0.SNAPSHOT'
 description = 'A set of gradle plugins for popular tools and other assorted plugins.'
-status = 'snapshot'
+
+configurations {
+	integTestCompile {
+		extendsFrom testCompile
+	}
+	integTestRuntime {
+		extendsFrom integTestCompile, testRuntime
+	}
+}
+
+sourceSets {
+	integTest {
+		java.srcDir file('src/integTest/java')
+		resources.srcDir file('src/integTest/resources')
+		groovy.srcDir file('src/integTest/groovy')
+		compileClasspath = sourceSets.main.classes + sourceSets.test.classes + configurations.integTestCompile
+		runtimeClasspath = classes + compileClasspath + configurations.integTestRuntime
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -35,6 +53,14 @@ dependencies {
 		[group:'junit', name:'junit', version:'4.8.2']
 	)
 }
+
+task integTest(type: Test, dependsOn: jar) {
+	testClassesDir = sourceSets.integTest.classesDir
+	classpath = sourceSets.integTest.runtimeClasspath
+	//systemProperties['jar.path'] = jar.archivePath
+}
+
+check.dependsOn integTest
 
 task sourcesJar(type:Jar, dependsOn:classes) {
 	classifier = 'sources'
