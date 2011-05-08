@@ -31,7 +31,8 @@ class FindbugsConvention {
 	private ProjectInternal project
 	
 	/**
-	 * The name of the directory to use 
+	 * The name of the directory to use for
+	 * Findbugs results.
 	 */
 	String resultsDirName
 	

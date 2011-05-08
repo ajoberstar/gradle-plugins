@@ -24,9 +24,20 @@ import org.gradle.api.plugins.ReportingBasePlugin
 import org.gradle.api.tasks.SourceSet
 
 /**
+ * <p>
  * A {@link Plugin} that generates code quality metrics by
  * scanning your source packages.  This is done using the
- * PMD tool.  {@link http://pmd.sourceforge.net/}
+ * PMD tool.  
+ * </p>
+ * <p>
+ * This plugin will automtically generate a task for each Java source set.
+ * </p>
+ * See {@link http://pmd.sourceforge.net/} for more information.
+ * @author Andrew Oberstar
+ * @version 0.1.0
+ * @see Findbugs
+ * @see FindbugsConvention
+ * @since 0.1.0
  */
 class PMDPlugin implements Plugin<Project> {
 	private static final PMD_TASK_NAME = 'pmd'
