@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ajoberstar.gradle.findbugs.test
+package org.ajoberstar.gradle.pmd.unit
 
-import org.ajoberstar.gradle.findbugs.Findbugs
-import org.ajoberstar.gradle.findbugs.FindbugsConvention
-import org.ajoberstar.gradle.findbugs.FindbugsPlugin
+import org.ajoberstar.gradle.pmd.PMD
+import org.ajoberstar.gradle.pmd.PMDConvention
+import org.ajoberstar.gradle.pmd.PMDPlugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.plugins.JavaPlugin
@@ -29,9 +29,9 @@ import org.junit.Test
  * @author Andy
  *
  */
-class FindbugsPluginTest {
+class PMDPluginTest {
 	private final Project project = ProjectBuilder.builder().withProjectDir(new File('build/tmp/test')).build()
-	private final FindbugsPlugin plugin = new FindbugsPlugin()
+	private final PMDPlugin plugin = new PMDPlugin()
 	
 	
 	@Test
@@ -43,7 +43,7 @@ class FindbugsPluginTest {
 	@Test
 	void apply_addsConventionObjectsToProject() {
 		plugin.apply(project)
-		assert project.convention.plugins.findbugs instanceof FindbugsConvention
+		assert project.convention.plugins.pmd instanceof PMDConvention
 	}
 	
 	@Test
@@ -59,11 +59,11 @@ class FindbugsPluginTest {
 	
 	private void verifyTaskForSet(String setName) {
 		def taskSet = setName.substring(0, 1).toUpperCase() + setName.substring(1)
-		def task = project.tasks[FindbugsPlugin.FINDBUGS_TASK_NAME + taskSet]
-		assert task instanceof Findbugs
+		def task = project.tasks[PMDPlugin.PMD_TASK_NAME + taskSet]
+		assert task instanceof PMD
 		assert task.defaultSource == project.sourceSets[setName].allJava
-		assert task.classesDir == project.sourceSets[setName].classesDir
-		assert task.resultsFile == project.file("build/findbugs/${setName}.xml")
+		assert task.resultsFile == project.file("build/pmd/${setName}.xml")
+		assert task.reportsFile == project.file("build/reports/pmd/${setName}.html")
 		
 		assert project.tasks[JavaBasePlugin.CHECK_TASK_NAME].dependsOn(task.getName())
 	}
@@ -72,9 +72,8 @@ class FindbugsPluginTest {
 	void add_configuresAdditionalTasksDefinedByTheBuildScript() {
 		plugin.apply(project)
 		
-		def task = project.tasks.add('customFindbugs', Findbugs)
+		def task = project.tasks.add('customPMD', PMD)
 		assert task.defaultSource == null
-		assert task.classesDir == null
 		assert task.resultsFile == null
 	}
 }
