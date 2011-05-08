@@ -26,8 +26,19 @@ import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.compile.Compile;
 
 /**
+ * <p>
  * A {@link Plugin} which uses static analysis to look for bugs in Java code.  
- * This is done using the Findbugs tool.  {@link http://findbugs.sourceforge.net/}
+ * This is done using the Findbugs tool.
+ * </p>
+ * <p>
+ * This plugin will automtically generate a task for each Java source set.
+ * </p>
+ * See {@link http://findbugs.sourceforge.net/} for more information.
+ * @author Andrew Oberstar
+ * @version 0.1.0
+ * @see Findbugs
+ * @see FindbugsConvention
+ * @since 0.1.0
  */
 class FindbugsPlugin implements Plugin<Project> {
 	private static final String FINDBUGS_TASK_NAME = 'findbugs'
@@ -35,7 +46,7 @@ class FindbugsPlugin implements Plugin<Project> {
 	
 	/**
 	* Applies the plugin to the specified project.
-	* @param project the project to apply this plugin too
+	* @param project the project to apply this plugin to
 	*/
    void apply(Project project) {
 	   project.plugins.apply(ReportingBasePlugin)
@@ -54,7 +65,7 @@ class FindbugsPlugin implements Plugin<Project> {
    }
    
    /**
-	* Adds a dependency for the check task on the all
+	* Adds a dependency for the check task on all
 	* Findbugs tasks.
 	* @param project the project to configure the check task for
 	*/
@@ -66,7 +77,7 @@ class FindbugsPlugin implements Plugin<Project> {
    /**
 	* Configures Findbugs tasks for Java source sets.
 	* @param project the project to configure findbugs for
-	* @param convention the findbugs conventions to use
+	* @param convention the findbugs convention to use
 	*/
    private void configureForJavaPlugin(final Project project, final FindbugsConvention convention) {
 	   configureCheckTask(project)

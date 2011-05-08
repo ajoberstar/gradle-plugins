@@ -72,9 +72,15 @@ task javadocJar(type:Jar, dependsOn:javadoc) {
 	from javadoc.destinationDir
 }
 
+task groovydocJar(type:Jar, dependsOn:groovydoc) {
+	classifier = 'groovydoc'
+	from groovydoc.destinationDir
+}
+
 artifacts {
 	archives sourcesJar
 	archives javadocJar
+	archives groovydocJar
 }
 
 uploadArchives {

@@ -28,7 +28,19 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.VerificationTask
 
 /**
+ * <p>
+ * Gradle task that runs a Findbugs analysis on your code.    
+ * </p>
+ * <p>
+ * The main code of this is based on the Findbugs Ant task.  This was
+ * bypassed in order to make this task more flexible.
+ * </p>
+ * <p>
+ * See {link: http://findbugs.sourceforge.net/} for more information.
+ * </p>
  * @author Andrew Oberstar
+ * @version 0.1.0
+ * @since 0.1.0
  */
 class Findbugs extends SourceTask implements VerificationTask {
 	@Input FileCollection classpath = null
@@ -39,6 +51,17 @@ class Findbugs extends SourceTask implements VerificationTask {
 	
 	@OutputFile File resultsFile = null
 	
+	/**
+	 * Runs the Findbugs analysis on the code.
+	 * <ul>
+	 * <li>{@code source} is used as the {@code -sourcepath} parameter</li>
+	 * <li>{@code classes} is used as the class location parameter</li>
+	 * <li>{@code classpath} is used as the {@code -auxclasspath} parameter</li>
+	 * <li>{@code findbugsProps} are passed directly to findbugs, in order</li>
+	 * <li>{@code systemProps} are passed as JVM arguments</li> 
+	 * </ul>
+	 *
+	 */
 	@TaskAction
 	public void check() {
 		getResultsFile().parentFile.mkdirs()
@@ -79,14 +102,30 @@ class Findbugs extends SourceTask implements VerificationTask {
 		}
 	}
 	
+	/**
+	 * Adds a property to the end of the list of 
+	 * findbugs properties.
+	 * @param props one or more {@code String} properties to add
+	 */
 	void findbugsProp(String... props) {
 		findbugsProps.addAll(props)
 	}
 	
+	/**
+	 * Adds a system property to the map of system properties.
+	 * These are treated as JVM arguments
+	 * 
+	 * @param name the name of the system property
+	 * @param value the value of the system property
+	 */
 	void systemProp(String name, String value) {
 		this.systemProps[name] = value
 	}
 	
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
 	VerificationTask setIgnoreFailures(boolean ignoreFailures) {
 		this.ignoreFailures = ignoreFailures
 		return this
