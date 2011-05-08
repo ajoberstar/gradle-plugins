@@ -14,6 +14,7 @@ apply plugin: 'maven'
 apply plugin: de.huxhorn.gradle.pgp.PgpPlugin
 
 group = 'org.ajoberstar'
+name = 'gradle-plugins'
 version = '0.1.0.SNAPSHOT'
 description = 'A set of gradle plugins for popular tools and other assorted plugins.'
 
