@@ -25,9 +25,20 @@ import org.gradle.api.tasks.GroovySourceSet
 import org.gradle.api.tasks.SourceSet
 
 /**
+ * <p>
  * A {@link Plugin} that generates design quality metrics by
- * scanning your source packages.  This is done using the
- * JDepend tool.  {@link http://www.clarkware.com/software/JDepend.html}
+ * scanning your source packages.  This is done using the JDepend
+ * tool.
+ * </p>
+ * <p>
+ * This plugin will automtically generate a task for each Java source set.
+ * </p>
+ * See {@link http://www.clarkware.com/software/JDepend.html} for more information.
+ * @author Andrew Oberstar
+ * @version 0.1.0
+ * @see JDepend
+ * @see JDependConvention
+ * @since 0.1.0
  */
 class JDependPlugin implements Plugin<Project> {
 	private static final String JDEPEND_TASK_NAME = 'jdepend'

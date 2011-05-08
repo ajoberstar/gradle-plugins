@@ -19,10 +19,22 @@ import org.ajoberstar.gradle.jdepend.JDependPlugin
 import org.gradle.api.Project
 
 /**
- * @author Andy
- *
+ * A helper class to call the JDepend Ant task.
+ * 
+ * @author Andrew Oberstar
+ * @version 0.1.0
+ * @version 0.1.0
  */
 class AntJDepend {
+	/**
+	 * Calls the JDepend Ant task
+	 * @param ant the ant builder to use
+	 * @param project the project this is being executed for
+	 * @param classesDir the directory where the classes to analyze are located
+	 * @param resultsFile the file to generate the results XML to
+	 * @param ignoreFailures whether to fail the task if there is an error
+	 * @return
+	 */
 	def call(AntBuilder ant, Project project, File classesDir, File resultsFile, boolean ignoreFailures) {
 		ant.taskdef(name:'jdepend', classname:'org.apache.tools.ant.taskdefs.optional.jdepend.JDependTask', classpath:project.configurations[JDependPlugin.JDEPEND_CONFIGURATION_NAME].asPath)
 		ant.jdepend(format:'xml', outputFile:resultsFile, haltOnError:!ignoreFailures) {

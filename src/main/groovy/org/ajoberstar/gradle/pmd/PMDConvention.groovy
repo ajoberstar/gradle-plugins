@@ -22,7 +22,13 @@ import org.gradle.api.Project
 import org.gradle.api.internal.project.ProjectInternal
 
 /**
- * A convention describing PMD settings.
+ * Convention specifying defaults for
+ * the PMD plugin.
+ * 
+ * @author Andrew Oberstar
+ * @version 0.1.0
+ * @see PMDPlugin
+ * @since 0.1.0
  */
 class PMDConvention {
 	private ProjectInternal project
@@ -43,7 +49,11 @@ class PMDConvention {
 	Set<String> rulesets = new HashSet<String>()
 	
 	/**
-	 * Constructs the convention for this project.
+	 * Creates a convention instance tied
+	 * to the specified project.
+	 * 
+	 * Defaults the {@code resultsDirName} and 
+	 * {@code reportsDirName} to "pmd"
 	 * @param project
 	 */
 	PMDConvention(Project project) {
@@ -61,16 +71,20 @@ class PMDConvention {
    }
 	
 	/**
-	 * 
-	 * @return file pointing to the results directory
+	 * Gets the directory to be used for Findbugs results. This is determined
+	 * using the {@code resultsDirName} property, evaluated relative to the
+	 * project's build directory.
+	 * @return the results dir for Findbugs
 	 */
 	File getResultsDir() {
 		project.fileResolver.withBaseDir(project.buildDir).resolve(resultsDirName)
 	}
 	
 	/**
-	 * 
-	 * @return file pointing to the reports directory
+	 * Gets the directory to be used for Findbugs reports. This is determined
+	 * using the {@code resultsDirName} property, evaluated relative to the
+	 * project's build directory.
+	 * @return the reports  dir for Findbugs
 	 */
 	File getReportsDir() {
 		project.fileResolver.withBaseDir(project.reportsDir).resolve(reportsDirName)

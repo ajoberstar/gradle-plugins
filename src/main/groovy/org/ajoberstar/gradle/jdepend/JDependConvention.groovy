@@ -20,16 +20,30 @@ import java.io.File
 import org.gradle.api.Project
 import org.gradle.api.internal.project.ProjectInternal
 
+
 /**
+ * Convention specifying defaults for
+ * the JDepend plugin.
  * 
+ * @author Andrew Oberstar
+ * @version 0.1.0
+ * @see JDependPlugin
+ * @since 0.1.0 
  */
 class JDependConvention {
 	private ProjectInternal project
 	
+	/**
+	 * The name of the directory to use for
+	 * JDepend results.
+	 */
 	String resultsDirName
 	
 	/**
+	 * Creates a convention instance tied
+	 * to the specified project.
 	 * 
+	 * Defaults the {@code resultsDirName} to "jdepend"
 	 * @param project
 	 */
 	JDependConvention(Project project) {
@@ -38,8 +52,10 @@ class JDependConvention {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the directory to be used for JDepend results. This is determined
+	 * using the {@code resultsDirName} property, evaluated relative to the
+	 * project's build directory.
+	 * @return the results dir for JDepend
 	 */
 	File getResultsDir() {
 		project.fileResolver.withBaseDir(project.buildDir).resolve(resultsDirName)
