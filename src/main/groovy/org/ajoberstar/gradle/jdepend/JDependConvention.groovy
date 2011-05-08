@@ -15,8 +15,6 @@
 */
 package org.ajoberstar.gradle.jdepend
 
-import java.io.File
-
 import org.gradle.api.Project
 import org.gradle.api.internal.project.ProjectInternal
 

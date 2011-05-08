@@ -28,7 +28,7 @@ import org.gradle.api.tasks.VerificationTask;
 
 /**
  * <p>
- * Gradle task that runs a JDepend analysis on your code.    
+ * Gradle task that runs a JDepend analysis on your code.
  * </p>
  * <p>
  * This implementation uses the {@link AntJDepend} class to do the work.
@@ -57,7 +57,7 @@ public class JDepend extends DefaultTask implements VerificationTask {
 		Spec<Task> spec = new Spec<Task>() {
 			public boolean isSatisfiedBy(Task task) {
 				if (task instanceof JDepend) {
-					return ((JDepend) task).getClassesDir().exists();	
+					return ((JDepend) task).getClassesDir().exists();
 				} else {
 					return false;
 				}
@@ -71,12 +71,14 @@ public class JDepend extends DefaultTask implements VerificationTask {
 	 * 
 	 * <ul>
 	 * <li>{@code classesDir} specifies the directory to analyze</li>
-	 * <li>{@code resultsFile} specifies where the XML results will be generated.</li>
+	 * <li>{@code resultsFile} specifies where the XML results will 
+	 * be generated.</li>
 	 * </ul>
 	 */
 	@TaskAction
 	void check() {
-		antJDepend.call(getAnt(), getProject(), getClassesDir(), getResultsFile(), isIgnoreFailures());
+		antJDepend.call(getAnt(), getProject(), getClassesDir(),
+				getResultsFile(), isIgnoreFailures());
 	}
 
 	/**
@@ -126,10 +128,10 @@ public class JDepend extends DefaultTask implements VerificationTask {
 	 * Sets whether this task will ignore failures and continue running
 	 * the build.
 	 * @param ignoreFailures the ignoreFailures to set
+	 * @return {@code this}
 	 */
 	public VerificationTask setIgnoreFailures(boolean ignoreFailures) {
 		this.ignoreFailures = ignoreFailures;
 		return this;
 	}
-	
 }

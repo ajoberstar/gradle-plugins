@@ -17,13 +17,11 @@ package org.ajoberstar.gradle.findbugs
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.GroovyBasePlugin
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.plugins.ReportingBasePlugin
-import org.gradle.api.tasks.GroovySourceSet
 import org.gradle.api.tasks.SourceSet
-import org.gradle.api.tasks.compile.Compile;
+import org.gradle.api.tasks.compile.Compile
 
 /**
  * <p>
@@ -51,10 +49,10 @@ class FindbugsPlugin implements Plugin<Project> {
    void apply(Project project) {
 	   project.plugins.apply(ReportingBasePlugin)
 	   
-	   project.getConfigurations().add(FINDBUGS_CONFIGURATION_NAME)
+	   project.configurations.add(FINDBUGS_CONFIGURATION_NAME)
 		   .setVisible(false)
 		   .setTransitive(true)
-		   .setDescription("The findbugs libraries to be used for this project.")
+		   .setDescription('The findbugs libraries to be used for this project.')
 	   
 	   def convention = new FindbugsConvention(project)
 	   project.convention.plugins.findbugs = convention

@@ -65,7 +65,7 @@ class PMDPluginTest {
 		assert task.resultsFile == project.file("build/pmd/${setName}.xml")
 		assert task.reportsFile == project.file("build/reports/pmd/${setName}.html")
 		
-		assert project.tasks[JavaBasePlugin.CHECK_TASK_NAME].dependsOn(task.getName())
+		assert project.tasks[JavaBasePlugin.CHECK_TASK_NAME].dependsOn(task.name)
 	}
 	
 	@Test

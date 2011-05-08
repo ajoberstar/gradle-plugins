@@ -15,13 +15,12 @@
  */
 package org.ajoberstar.gradle.findbugs.integ
 
-import org.gradle.tooling.BuildException;
+import org.gradle.tooling.BuildException
 import org.gradle.tooling.BuildLauncher
 import org.gradle.tooling.GradleConnector
 import org.gradle.tooling.ProjectConnection
 import org.junit.After
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 
 /**
@@ -33,7 +32,6 @@ class FindbugsIntegrationTest {
 	private static final File TEST_DIR = new File('build/tmp/testProjects')
 	
 	private BuildLauncher launcher
-	private File testDir
 	
 	@Before
 	void newBuild() {
@@ -59,8 +57,8 @@ class FindbugsIntegrationTest {
 		
 		launcher.run()
 		
-		assert testFile('build/findbugs/main.xml').getText().contains('org.ajoberstar.Class1')
-		assert testFile('build/findbugs/test.xml').getText().contains('org.ajoberstar.Class1Test')
+		assert testFile('build/findbugs/main.xml').text.contains('org.ajoberstar.Class1')
+		assert testFile('build/findbugs/test.xml').text.contains('org.ajoberstar.Class1Test')
 	}
 	
 	@Test(expected=BuildException.class)
@@ -73,18 +71,16 @@ class FindbugsIntegrationTest {
 	
 	@After
 	void cleanBuild() {
-		if (TEST_DIR.exists() && !TEST_DIR.deleteDir()) {
-			throw new Exception('failed to clean up: ' + TEST_DIR)
-		}
+		assert !TEST_DIR.exists() || TEST_DIR.deleteDir()
 	}
 	
-	File testFile(String path) {
+	private File testFile(String path) {
 		File file = new File(TEST_DIR, path)
 		file.parentFile.mkdirs()
 		return file
 	}
 	
-	void writeBuildFile() {
+	private void writeBuildFile() {
 		testFile('build.gradle') << """\
 		buildscript {
 			dependencies {

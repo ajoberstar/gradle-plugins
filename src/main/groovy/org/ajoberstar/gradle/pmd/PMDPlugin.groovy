@@ -15,7 +15,6 @@
  */
 package org.ajoberstar.gradle.pmd
 
-import org.ajoberstar.gradle.jdepend.JDependConvention;
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaBasePlugin
@@ -50,10 +49,10 @@ class PMDPlugin implements Plugin<Project> {
 	void apply(Project project) {
 		project.plugins.apply(ReportingBasePlugin)
 		
-		project.getConfigurations().add(PMD_CONFIGURATION_NAME)
+		project.configurations.add(PMD_CONFIGURATION_NAME)
 		.setVisible(false)
 		.setTransitive(true)
-		.setDescription("The jdepend libraries to be used for this project.")
+		.setDescription('The jdepend libraries to be used for this project.')
 		
 		def convention = new PMDConvention(project)
 		project.convention.plugins.pmd = convention

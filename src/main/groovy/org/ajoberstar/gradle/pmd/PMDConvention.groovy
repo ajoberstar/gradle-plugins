@@ -15,9 +15,6 @@
  */
 package org.ajoberstar.gradle.pmd
 
-import java.io.File;
-import java.util.Set;
-
 import org.gradle.api.Project
 import org.gradle.api.internal.project.ProjectInternal
 
@@ -46,7 +43,7 @@ class PMDConvention {
 	/**
 	 * Paths to ruleset files.
 	 */
-	Set<String> rulesets = new HashSet<String>()
+	Set<String> rulesets = [] as Set
 	
 	/**
 	 * Creates a convention instance tied
@@ -58,8 +55,7 @@ class PMDConvention {
 	 */
 	PMDConvention(Project project) {
 		this.project = project
-		reportsDirName = 'pmd'
-		resultsDirName = 'pmd'
+		this.reportsDirName = this.resultsDirName = 'pmd'
 	}
 	
 	/**

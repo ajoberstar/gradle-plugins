@@ -15,16 +15,15 @@
  */
 package org.ajoberstar.gradle.jdepend.unit
 
-import org.gradle.api.plugins.JavaBasePlugin
-import org.ajoberstar.gradle.jdepend.JDepend 
-import org.ajoberstar.gradle.jdepend.JDependConvention 
-import org.ajoberstar.gradle.jdepend.JDependPlugin 
+import org.ajoberstar.gradle.jdepend.JDepend
+import org.ajoberstar.gradle.jdepend.JDependConvention
+import org.ajoberstar.gradle.jdepend.JDependPlugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.ReportingBasePlugin
+import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
-import org.gradle.api.plugins.JavaBasePlugin
-import org.gradle.testfixtures.ProjectBuilder;
 
 /**
  * @author Andy
@@ -65,7 +64,7 @@ class JDependPluginTest {
 		assert task.classesDir == project.sourceSets[setName].classesDir
 		assert task.resultsFile == project.file("build/jdepend/${setName}.xml")
 		
-		assert project.tasks[JavaBasePlugin.CHECK_TASK_NAME].dependsOn(task.getName())
+		assert project.tasks[JavaBasePlugin.CHECK_TASK_NAME].dependsOn(task.name)
 	}
 	
 	@Test

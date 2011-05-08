@@ -20,7 +20,7 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.GroovyBasePlugin
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.plugins.JavaPluginConvention
-import org.gradle.api.plugins.ReportingBasePlugin;
+import org.gradle.api.plugins.ReportingBasePlugin
 import org.gradle.api.tasks.GroovySourceSet
 import org.gradle.api.tasks.SourceSet
 
@@ -51,10 +51,10 @@ class JDependPlugin implements Plugin<Project> {
 	void apply(Project project) {
 		project.plugins.apply(ReportingBasePlugin)
 		
-		project.getConfigurations().add(JDEPEND_CONFIGURATION_NAME)
+		project.configurations.add(JDEPEND_CONFIGURATION_NAME)
 			.setVisible(false)
 			.setTransitive(true)
-			.setDescription("The jdepend libraries to be used for this project.")
+			.setDescription('The jdepend libraries to be used for this project.')
 		
 		def convention = new JDependConvention(project)
 		project.convention.plugins.jdepend = convention

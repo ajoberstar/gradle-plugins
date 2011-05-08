@@ -9,9 +9,12 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'code-quality'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: de.huxhorn.gradle.pgp.PgpPlugin
+
+codeNarcConfigFileName = 'config/codenarc/codenarc.groovy'
 
 group = 'org.ajoberstar'
 version = '0.1.0.SNAPSHOT'
@@ -57,7 +60,6 @@ dependencies {
 task integTest(type: Test, dependsOn: jar) {
 	testClassesDir = sourceSets.integTest.classesDir
 	classpath = sourceSets.integTest.runtimeClasspath
-	//systemProperties['jar.path'] = jar.archivePath
 }
 
 check.dependsOn integTest
