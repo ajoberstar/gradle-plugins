@@ -17,12 +17,11 @@ package org.ajoberstar.gradle.jdepend
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.GroovyBasePlugin
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.plugins.ReportingBasePlugin
-import org.gradle.api.tasks.GroovySourceSet
 import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.compile.Compile
 
 /**
  * <p>
@@ -62,9 +61,6 @@ class JDependPlugin implements Plugin<Project> {
 		project.plugins.withType(JavaBasePlugin) {
 			configureForJavaPlugin(project, convention)
 		}
-		project.plugins.withType(GroovyBasePlugin) {
-			configureForGroovyPlugin(project, convention)
-		}
 	}
 	
 	/**
@@ -88,22 +84,8 @@ class JDependPlugin implements Plugin<Project> {
 		project.convention.getPlugin(JavaPluginConvention).sourceSets.all { SourceSet set ->
 			def jdepend = project.tasks.add(set.getTaskName(JDEPEND_TASK_NAME, null), JDepend)
 			jdepend.description = "Run jdepend analysis for ${set.name} classes"
+			jdepend.dependsOn project.tasks.withType(Compile)
 			jdepend.conventionMapping.classesDir = { set.classesDir }
-			jdepend.conventionMapping.resultsFile = { new File(convention.resultsDir, "${set.name}.xml") }
-		}
-	}
-	
-	/**
-	 * Configures JDepend tasks for Groovy source sets.
-	 * @param project the project to configure jdepend for
-	 * @param convention the jdepend conventions to use
-	 */
-	private void configureForGroovyPlugin(final Project project, final JDependConvention convention) {		
-		project.convention.getPlugin(JavaPluginConvention).sourceSets.all { SourceSet set ->
-			def groovySourceSet = set.convention.getPlugin(GroovySourceSet)
-			def jdepend = project.tasks.add(set.getTaskName(JDEPEND_TASK_NAME, null), JDepend)
-			jdepend.description = "Run jdepend analysis for ${set.name} classes"
-			jdepend.conventionMapping.classesDir = { groovySourceSet.classesDir }
 			jdepend.conventionMapping.resultsFile = { new File(convention.resultsDir, "${set.name}.xml") }
 		}
 	}
