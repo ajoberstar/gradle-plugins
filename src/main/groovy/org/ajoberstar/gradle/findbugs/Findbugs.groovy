@@ -22,7 +22,6 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
-import org.gradle.api.tasks.TaskExecutionException
 import org.gradle.api.tasks.VerificationTask
 
 /**
@@ -112,12 +111,12 @@ class Findbugs extends SourceTask implements VerificationTask {
 		def rc = findbugs.executeJava()
 		
 		if ((rc & 0x4) != 0) {
-			throw new TaskExecutionException('Execution of findbugs failed.')
+			throw new FindbugsException('Execution of findbugs failed.')
 		} else if ((rc & 0x2) != 0) {
 			this.logger.warn('Classes needed for analysis were missing')
 		}
 		if (!ignoreFailures && ((rc & 0x1) != 0)) {
-			throw new TaskExecutionException('Findbugs reported warnings.')
+			throw new FindbugsException('Findbugs reported warnings.')
 		}
 	}
 	
