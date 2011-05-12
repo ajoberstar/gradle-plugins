@@ -17,7 +17,7 @@ apply plugin: de.huxhorn.gradle.pgp.PgpPlugin
 codeNarcConfigFileName = 'config/codenarc/codenarc.groovy'
 
 group = 'org.ajoberstar'
-version = '0.1.0.SNAPSHOT'
+version = '0.1.0'
 description = 'A set of gradle plugins for popular tools and other assorted plugins.'
 
 configurations {
