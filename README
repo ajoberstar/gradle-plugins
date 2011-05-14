@@ -1,6 +1,9 @@
 Gradle Plugins by ajoberstar
 
-This is a set of Apache licensed Gradle plugins.  Currently includes:
+This is a set of Apache licensed Gradle plugins.  It is available through Maven Central with groupId=org.ajoberstar
+and artifactId=gradle-plugins.
+
+Currently includes:
 
 - PMD
 - JDepend
