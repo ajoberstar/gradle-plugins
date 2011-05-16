@@ -53,6 +53,7 @@ class PMDIntegrationTest {
 		'''
 		testFile('src/main/java/org/ajoberstar/Class1.java') << 'package org.ajoberstar; class Class1 { {} public boolean equals(Object arg) { return true; } }'
 		testFile('src/test/java/org/ajoberstar/Class1Test.java') << 'package org.ajoberstar; class Class1Test { {} public boolean equals(Object arg) { return true; } }'
+		testFile('config/pmd/rulesets.xml') << '<ruleset name="Custom ruleset"> <rule ref="rulesets/basic.xml" /> </ruleset>'
 		
 		launcher.run()
 		
@@ -62,6 +63,19 @@ class PMDIntegrationTest {
 	
 	@Test(expected=BuildException.class)
 	void check_JavaSource_FailsBuild() {
+		testFile('src/main/java/org/ajoberstar/Class1.java') << 'package org.ajoberstar; class Class1 { {} public boolean equals(Object arg) { return true; } }'
+		testFile('src/test/java/org/ajoberstar/Class1Test.java') << 'package org.ajoberstar; class Class1Test { {} public boolean equals(Object arg) { return true; } }'
+		testFile('config/pmd/rulesets.xml') << '<ruleset name="Custom ruleset"> <rule ref="rulesets/basic.xml" /> </ruleset>'
+		
+		launcher.run()
+	}
+	
+	@Test(expected=BuildException.class)
+	void check_OverrideRulesets_GeneratesReport() {
+		testFile('build.gradle') << '''\
+		convention.plugins.pmd.rulesets = ['rulesets/basic.xml']
+		'''
+		
 		testFile('src/main/java/org/ajoberstar/Class1.java') << 'package org.ajoberstar; class Class1 { {} public boolean equals(Object arg) { return true; } }'
 		testFile('src/test/java/org/ajoberstar/Class1Test.java') << 'package org.ajoberstar; class Class1Test { {} public boolean equals(Object arg) { return true; } }'
 		
@@ -88,8 +102,6 @@ class PMDIntegrationTest {
 		}
 		apply plugin: 'groovy'
 		apply plugin: 'pmd'
-		
-		convention.plugins.pmd.rulesets 'rulesets/basic.xml'
 		
 		repositories {
 			mavenCentral()

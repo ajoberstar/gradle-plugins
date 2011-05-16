@@ -19,10 +19,9 @@ import java.io.File;
 
 import org.ajoberstar.gradle.jdepend.internal.AntJDepend;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.Task;
-import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.VerificationTask;
 
@@ -49,24 +48,6 @@ public class JDepend extends DefaultTask implements VerificationTask {
 	private AntJDepend antJDepend = new AntJDepend();
 	
 	/**
-	 * Default constructor.  Adds an {@code onlyIf} condition
-	 * to the task so that it will only run if the classes dir
-	 * exists.
-	 */
-	public JDepend() {
-		Spec<Task> spec = new Spec<Task>() {
-			public boolean isSatisfiedBy(Task task) {
-				if (task instanceof JDepend) {
-					return ((JDepend) task).getClassesDir().exists();
-				} else {
-					return false;
-				}
-			}
-		};
-		this.onlyIf(spec);
-	}
-	
-	/**
 	 * Runs the JDepend analysis.
 	 * 
 	 * <ul>
@@ -86,6 +67,7 @@ public class JDepend extends DefaultTask implements VerificationTask {
 	 * @return the classesDir
 	 */
 	@InputDirectory
+	@SkipWhenEmpty
 	public File getClassesDir() {
 		return classesDir;
 	}

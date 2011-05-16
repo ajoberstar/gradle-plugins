@@ -19,6 +19,7 @@ import org.apache.tools.ant.taskdefs.Java
 import org.apache.tools.ant.types.Path
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
@@ -37,7 +38,7 @@ import org.gradle.api.tasks.VerificationTask
  * about the tool.
  * </p>
  * @author Andrew Oberstar
- * @version 0.1.0
+ * @version 0.1.1
  * @since 0.1.0
  */
 class Findbugs extends SourceTask implements VerificationTask {
@@ -45,11 +46,11 @@ class Findbugs extends SourceTask implements VerificationTask {
 	 * The additional classes that should be on the classpath during the analysis.  These classes
 	 * will not be analyzed.
 	 */
-	@Input FileCollection classpath = null
+	@InputFiles FileCollection classpath = null
 	/**
 	 * The classes to analyze.
 	 */
-	@Input FileCollection classes = null
+	@InputFiles FileCollection classes = null
 	/**
 	 * The properties to pass to findbugs.  These will be passed in order.
 	 */

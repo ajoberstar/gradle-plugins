@@ -16,7 +16,7 @@
 package org.ajoberstar.gradle.pmd
 
 import org.gradle.api.file.FileCollection
-import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
@@ -34,14 +34,14 @@ import org.gradle.api.tasks.VerificationTask
  * about the tool.
  * </p>
  * @author Andrew Oberstar
- * @version 0.1.0
+ * @version 0.1.1
  * @since 0.1.0
  */
 class PMD extends SourceTask implements VerificationTask {	
 	/**
 	 * The rulesets to use during this execution.
 	 */
-	@Input Set<File> rulesets
+	@InputFiles Set<File> rulesets
 	/**
 	 * Whether or not to allow the build to continue if there are warnings.
 	 */

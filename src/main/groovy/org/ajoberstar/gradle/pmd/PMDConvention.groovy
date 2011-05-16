@@ -56,6 +56,7 @@ class PMDConvention {
 	PMDConvention(Project project) {
 		this.project = project
 		this.reportsDirName = this.resultsDirName = 'pmd'
+		rulesets.add(project.file('config/pmd/rulesets.xml'))
 	}
 	
 	/**
