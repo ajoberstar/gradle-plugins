@@ -1,7 +1,6 @@
 Gradle Plugins by ajoberstar
 
-This is a set of Apache licensed Gradle plugins.  It is available through Maven Central with groupId=org.ajoberstar
-and artifactId=gradle-plugins.
+This is a set of Apache licensed Gradle plugins.  It is available through Maven Central.
 
 Currently includes:
 
@@ -10,6 +9,11 @@ Currently includes:
 - Findbugs
 
 All 3 plugins require the tools to be included in their respective configurations.
+
+buildscript {
+	repositories { mavenCentral() }
+	dependencies { classpath group:'org.ajoberstar', name:'gradle-plugins', version:'0.1.1' }
+}
 
 apply plugin: 'findbugs'
 apply plugin: 'jdepend'
@@ -28,3 +32,4 @@ dependencies {
 }
 
 Each plugin generates a task per source set dependent on the check task.
+
