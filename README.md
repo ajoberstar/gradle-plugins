@@ -3,9 +3,12 @@
 A set of plugins for the Gradle build tool.  They are available through Maven Central.
 
 The existing plugins are:
+
 * Findbugs
 * JDepend
 * PMD
+
+v0.1.1 was tested against 1.0-milestone-3
 
 These have been contributed to Gradle and will be included in the 1.0-milestone-8 release.
 They will no longer be supported through this project, though I may add other plugins at
@@ -50,7 +53,7 @@ Each plugin generates a task per source set dependent on the check task.
 
 **v0.1.0**
 
-Initial release.
+* Initial release.
 
 **v0.1.1**
 
