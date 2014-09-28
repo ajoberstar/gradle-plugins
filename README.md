@@ -1,5 +1,7 @@
 # gradle-plugins
 
+[![Maintainer Status](http://stillmaintained.com/ajoberstar/gradle-plugins.png)](http://stillmaintained.com/ajoberstar/gradle-plugins)
+
 A set of plugins for the Gradle build tool.  They are available through Maven Central.
 
 The existing plugins are:
